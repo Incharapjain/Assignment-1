@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cakes - Cake Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Just Bake</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="cakes.html">Cakes</a>
+            <a href="carts.html">Cart</a>
+        </nav>
+    </header>
+
+    <section id="cakes">
+        <h2>Our Cakes</h2>
+        <div class="cake-list">
+          
+            <div class="cake-card">
+                <img src="https://beyondfrosting.com/wp-content/uploads/2019/01/Chocolate-Cake-Recipe-017-600x600.jpg" alt="Chocolate Cake">
+                <h3>Chocolate Cake</h3>
+                <p>$450</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Chocolate Cake', 450, this)">Add to Cart</button>
+            </div>
+
+            <div class="cake-card">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0_tbrJhFqRBvlE7U2ICxmKMfmAS80QxP_naYKScnbLyK_zrqKmX7dRX5KbrHRUV0zhJE7OcXxrbn-phcibPiCD5rG5_S2dBiJrBfKgB1SxheGEdBFd_VfFOqFR9BPQqnp_ZIeWgtpX8L6/s1600/DSC07710.JPG" alt="Vanilla Cake">
+                <h3>Black Forest Cake</h3>
+                <p>$525</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Black Forest Cake', 525, this)">Add to Cart</button>
+            </div>
+            <div class="cake-card">
+                <img src="https://preview.redd.it/strawberry-cake-v0-suk00057uzfd1.jpg?width=640&crop=smart&auto=webp&s=3c8c7046615e7da0bb23ca11c49163c4a26b657a" alt="Vanilla Cake">
+                <h3>strawberry  Cake</h3>
+                <p>$325</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('strawberry  Cake', 325, this)">Add to Cart</button>
+            </div>
+            <div class="cake-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzNkQfGw5CPMhdIKN3_cNnaTZrF_Jqx-LMlw&s" alt="Vanilla Cake">
+                <h3>Red velvet Cake</h3>
+                <p>$700</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Red velvet Cake', 700, this)">Add to Cart</button>
+            </div>
+
+
+        </div>
+    </section>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+       
+        function changeQuantity(element, delta) {
+            const quantityElem = element.parentElement.querySelector('.quantity-count');
+            let currentQuantity = parseInt(quantityElem.innerText);
+            currentQuantity = Math.max(1, currentQuantity + delta); 
+            quantityElem.innerText = currentQuantity;
+        }
+
+       
+        function addToCart(cakeName, price, element) {
+            const cakeCard = element.closest('.cake-card');
+            const quantity = parseInt(cakeCard.querySelector('.quantity-count').innerText);
+
+            
+            const cakeInCart = cart.find(cake => cake.name === cakeName);
+            if (cakeInCart) {
+                cakeInCart.quantity += quantity;
+            } else {
+                const cake = {
+                    name: cakeName,
+                    price: price,
+                    quantity: quantity,
+                    image: cakeCard.querySelector('img').src
+                };
+                cart.push(cake);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert("Added to cart");
+        }
+    </script>
+</body>
+</html>
